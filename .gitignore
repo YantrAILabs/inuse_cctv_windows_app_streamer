@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv/
+.venv_stream/
+venv/
+ENV/
+
+# Project Specific (Sensitive)
+config.json
+logs/
+*.log
+*.bak
+
+# Build/Package
+build/
+dist/
+*.spec
+*.exe
+
+# IDEs
+.vscode/
+.idea/

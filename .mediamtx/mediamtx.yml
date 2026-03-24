@@ -1,0 +1,17 @@
+# Reconfigured mediamtx.yml for standard SRT push
+logLevel: info
+rtsp: true
+rtspAddress: :8556
+rtpAddress: :8012
+rtcpAddress: :8013
+rtmp: false
+hls: false
+webrtc: false
+
+# Enable global SRT listener on 8002
+srt: true
+srtAddress: :8002
+
+paths:
+  all_others:
+    # This will catch anything pushed to SRT

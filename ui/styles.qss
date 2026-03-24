@@ -1,0 +1,90 @@
+/* Professional Dark Theme for CCTV Viewer */
+
+QMainWindow {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+QWidget {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+QTabWidget::pane {
+    border-top: 1px solid #3d3d3d;
+}
+
+QTabBar::tab {
+    background: #2d2d2d;
+    padding: 10px 20px;
+    margin-right: 2px;
+}
+
+QTabBar::tab:selected {
+    background: #0078d4;
+    color: white;
+}
+
+QTabBar::tab:hover {
+    background: #3d3d3d;
+}
+
+QTreeWidget, QTableWidget {
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    gridline-color: #3d3d3d;
+}
+
+QHeaderView::section {
+    background-color: #3d3d3d;
+    color: white;
+    padding: 5px;
+    border: 1px solid #4d4d4d;
+}
+
+QPushButton {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: #1a88df;
+}
+
+QPushButton:pressed {
+    background-color: #005a9e;
+}
+
+QLineEdit {
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+}
+
+QLabel#title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Stream Tile Styles */
+QFrame#StreamTile {
+    border: 2px solid #333;
+}
+
+QFrame#StreamTile:focus {
+    border: 2px solid #0078d4;
+}
+
+#overlay-label {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 2px 5px;
+    font-size: 10px;
+}
