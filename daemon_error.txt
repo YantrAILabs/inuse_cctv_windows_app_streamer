@@ -1,0 +1,21 @@
+2026-03-29 19:15:52,812 [INFO] === Starting 16-Channel Cloud Push to 34.173.17.90 ===
+2026-03-29 19:15:52,814 [INFO]     DVR: 192.168.1.34 | Agent: site-01
+2026-03-29 19:15:52,814 [INFO]     FFmpeg: C:\Users\WELCOME\Desktop\DO NOT DELETE MOHIT FOLDER\inuse_cctv_windows_app_streamer\assets\ffmpeg\ffmpeg.exe
+2026-03-29 19:15:52,814 [INFO]     Max stream duration: 900s (auto-restart)
+2026-03-29 19:15:52,817 [INFO] Started Channel 01 -> rtsp://34.173.17.90:8554/site-01-ch01 (PID: 13732)
+2026-03-29 19:15:55,820 [INFO] Started Channel 02 -> rtsp://34.173.17.90:8554/site-01-ch02 (PID: 13648)
+2026-03-29 19:15:58,822 [INFO] Started Channel 03 -> rtsp://34.173.17.90:8554/site-01-ch03 (PID: 13744)
+2026-03-29 19:16:01,824 [INFO] Started Channel 04 -> rtsp://34.173.17.90:8554/site-01-ch04 (PID: 11728)
+2026-03-29 19:16:04,826 [INFO] Started Channel 05 -> rtsp://34.173.17.90:8554/site-01-ch05 (PID: 11052)
+2026-03-29 19:16:07,830 [INFO] Started Channel 06 -> rtsp://34.173.17.90:8554/site-01-ch06 (PID: 3496)
+2026-03-29 19:16:10,832 [INFO] Started Channel 07 -> rtsp://34.173.17.90:8554/site-01-ch07 (PID: 9592)
+2026-03-29 19:16:13,836 [INFO] Started Channel 08 -> rtsp://34.173.17.90:8554/site-01-ch08 (PID: 11396)
+2026-03-29 19:16:16,838 [INFO] Started Channel 09 -> rtsp://34.173.17.90:8554/site-01-ch09 (PID: 7648)
+2026-03-29 19:16:19,841 [INFO] Started Channel 10 -> rtsp://34.173.17.90:8554/site-01-ch10 (PID: 1580)
+2026-03-29 19:16:22,849 [INFO] Started Channel 11 -> rtsp://34.173.17.90:8554/site-01-ch11 (PID: 13340)
+2026-03-29 19:16:25,852 [INFO] Started Channel 12 -> rtsp://34.173.17.90:8554/site-01-ch12 (PID: 344)
+2026-03-29 19:16:28,854 [INFO] Started Channel 13 -> rtsp://34.173.17.90:8554/site-01-ch13 (PID: 1116)
+2026-03-29 19:16:31,856 [INFO] Started Channel 14 -> rtsp://34.173.17.90:8554/site-01-ch14 (PID: 12200)
+2026-03-29 19:16:34,860 [INFO] Started Channel 15 -> rtsp://34.173.17.90:8554/site-01-ch15 (PID: 3128)
+2026-03-29 19:16:37,902 [INFO] Started Channel 16 -> rtsp://34.173.17.90:8554/site-01-ch16 (PID: 572)
+2026-03-29 19:16:40,903 [INFO] All 16 streams initiated. Monitoring...

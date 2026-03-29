@@ -1,7 +1,7 @@
 import logging
 import math
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QScrollArea, QPushButton, QSplitter
-from PySide6.QtCore import Qt, Signal
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QScrollArea, QPushButton, QSplitter
+from PyQt6.QtCore import Qt, pyqtSignal as Signal
 from ui.stream_tile import StreamTile
 from core.stream_worker import StreamWorker
 
@@ -11,7 +11,7 @@ class ViewerTab(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         
-        self.splitter = QSplitter(Qt.Horizontal)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
         
         # Left Panel: Tree View
         left_panel = QWidget()
@@ -59,15 +59,15 @@ class ViewerTab(QWidget):
             ch_item = QTreeWidgetItem(device_item)
             res_str = f" [{ch['resolution']}]" if ch.get('resolution') else ""
             ch_item.setText(0, f"Channel {ch['channel_number']} - {ch['name']}{res_str}")
-            ch_item.setCheckState(0, Qt.Checked if ch.get('enabled', True) else Qt.Unchecked)
-            ch_item.setData(0, Qt.UserRole, (ip, ch['channel_number']))
+            ch_item.setCheckState(0, Qt.CheckState.Checked if ch.get('enabled', True) else Qt.CheckState.Unchecked)
+            ch_item.setData(0, Qt.ItemDataRole.UserRole, (ip, ch['channel_number']))
 
     def on_item_changed(self, item, column):
-        data = item.data(0, Qt.UserRole)
+        data = item.data(0, Qt.ItemDataRole.UserRole)
         if not data: return # Probably a root device item
         
         ip, ch_num = data
-        enabled = (item.checkState(0) == Qt.Checked)
+        enabled = (item.checkState(0) == Qt.CheckState.Checked)
         
         if enabled:
             self._start_stream(ip, ch_num)

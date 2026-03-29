@@ -3,7 +3,7 @@ import subprocess
 import time
 import re
 import os
-from PySide6.QtCore import QThread, Signal, QObject
+from PyQt6.QtCore import QThread, pyqtSignal as Signal, QObject
 from core.credential_store import CredentialStore
 
 class FFmpegWorker(QThread):

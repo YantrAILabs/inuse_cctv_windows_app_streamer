@@ -1,9 +1,9 @@
 import logging
-from PySide6.QtWidgets import (QMainWindow, QTabWidget, QStatusBar, QMenuBar, 
+from PyQt6.QtWidgets import (QMainWindow, QTabWidget, QStatusBar, QMenuBar, 
                              QMenu, QSystemTrayIcon, QStyle, QLabel, QMessageBox,
                              QPushButton)
-from PySide6.QtGui import QIcon, QAction, QKeySequence, QShortcut
-from PySide6.QtCore import Qt
+from PyQt6.QtGui import QIcon, QAction, QKeySequence, QShortcut
+from PyQt6.QtCore import Qt
 import psutil
 from ui.discovery_tab import DiscoveryTab
 from ui.viewer_tab import ViewerTab
@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         self.statusBar().addPermanentWidget(self.cloud_status_label)
         
         # Tray Icon
-        self.tray_icon = QSystemTrayIcon(self.style().standardIcon(QStyle.SP_ComputerIcon), self)
+        self.tray_icon = QSystemTrayIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_ComputerIcon), self)
         self.tray_icon.setToolTip("CCTV Viewer Running")
         
         # Tray Menu
@@ -166,8 +166,8 @@ class MainWindow(QMainWindow):
             res = QMessageBox.question(self, "Orphaned Streams Detected",
                                     f"Found {len(orphans)} cloud streaming processes running from a previous session. "
                                     "Continue linking with them?",
-                                    QMessageBox.Yes | QMessageBox.No)
-            if res == QMessageBox.No:
+                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            if res == QMessageBox.StandardButton.No:
                 for proc in orphans:
                     try:
                         proc.terminate()
@@ -186,11 +186,11 @@ class MainWindow(QMainWindow):
             msg_box.setText(f"Cloud streaming is currently active ({len(active_streams)} streams).")
             msg_box.setInformativeText("What would you like to do?")
             
-            stop_btn = msg_box.addButton("Stop & Exit", QMessageBox.ActionRole)
-            keep_btn = msg_box.addButton("Keep Running & Exit", QMessageBox.ActionRole)
-            cancel_btn = msg_box.addButton(QMessageBox.Cancel)
+            stop_btn = msg_box.addButton("Stop & Exit", QMessageBox.ButtonRole.ActionRole)
+            keep_btn = msg_box.addButton("Keep Running & Exit", QMessageBox.ButtonRole.ActionRole)
+            cancel_btn = msg_box.addButton(QMessageBox.StandardButton.Cancel)
             
-            msg_box.setDefaultButton(QMessageBox.Cancel)
+            msg_box.setDefaultButton(QMessageBox.StandardButton.Cancel)
             msg_box.exec()
             
             if msg_box.clickedButton() == stop_btn:

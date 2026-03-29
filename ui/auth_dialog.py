@@ -1,6 +1,6 @@
 import logging
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QFormLayout, QLineEdit, QPushButton, QLabel, QProgressBar, QCheckBox, QHBoxLayout
-from PySide6.QtCore import Qt, QThread, Signal
+from PyQt6.QtWidgets import QDialog, QVBoxLayout, QFormLayout, QLineEdit, QPushButton, QLabel, QProgressBar, QCheckBox, QHBoxLayout
+from PyQt6.QtCore import Qt, QThread, pyqtSignal as Signal
 from core.onvif_client import ONVIFClient
 from core.credential_store import CredentialStore
 
@@ -53,7 +53,7 @@ class AuthDialog(QDialog):
         form_layout = QFormLayout()
         self.user_input = QLineEdit("admin")
         self.pass_input = QLineEdit()
-        self.pass_input.setEchoMode(QLineEdit.Password)
+        self.pass_input.setEchoMode(QLineEdit.EchoMode.Password)
         
         # Load saved credentials if available
         saved_user, saved_pass = CredentialStore.load_credentials(device_info['ip'])

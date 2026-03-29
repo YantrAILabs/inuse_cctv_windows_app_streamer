@@ -3,12 +3,12 @@ import os
 import subprocess
 import shutil
 import httpx
-from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, 
+from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, 
                              QLineEdit, QPushButton, QLabel, QComboBox, 
                              QTableWidget, QTableWidgetItem, QHeaderView, 
                              QGroupBox, QFileDialog, QMessageBox, QAbstractItemView,
                              QSplitter, QCheckBox, QMenu, QTextEdit)
-from PySide6.QtCore import Qt, Signal, QThread, QTimer
+from PyQt6.QtCore import Qt, pyqtSignal as Signal, QThread, QTimer
 from core.config_manager import ConfigManager
 from core.tunnel_manager import TunnelManager
 from core.heartbeat_worker import HeartbeatWorker
@@ -43,7 +43,7 @@ class LogViewerDialog(QMessageBox):
         self.text_edit.setMinimumSize(600, 400)
         
         self.layout().addWidget(self.text_edit, 1, 0, 1, self.layout().columnCount())
-        self.setStandardButtons(QMessageBox.Ok)
+        self.setStandardButtons(QMessageBox.StandardButton.Ok)
 
 class CloudTab(QWidget):
     cloud_status_changed = Signal(int, int, float, bool)
@@ -63,7 +63,7 @@ class CloudTab(QWidget):
 
     def setup_ui(self):
         main_layout = QHBoxLayout(self)
-        self.splitter = QSplitter(Qt.Horizontal)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
         
         # --- Left Panel: Settings ---
         self.left_panel = QWidget()
@@ -85,7 +85,7 @@ class CloudTab(QWidget):
         
         self.edit_srt_latency = QLineEdit("300")
         self.edit_srt_passphrase = QLineEdit()
-        self.edit_srt_passphrase.setEchoMode(QLineEdit.Password)
+        self.edit_srt_passphrase.setEchoMode(QLineEdit.EchoMode.Password)
         
         self.combo_quality = QComboBox()
         self.combo_quality.addItems(["Sub Stream", "Main Stream"])
@@ -149,8 +149,8 @@ class CloudTab(QWidget):
         
         self.table = QTableWidget(0, 7)
         self.table.setHorizontalHeaderLabels(["Push", "Camera Name", "Device IP", "Channel", "SRT Port", "Status", "Bitrate"])
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         right_layout.addWidget(self.table)
         
         # Table Controls
@@ -192,7 +192,7 @@ class CloudTab(QWidget):
         right_layout.addWidget(self.lbl_server_warning)
         
         # Table Context Menu
-        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.table.customContextMenuRequested.connect(self.show_context_menu)
         
         self.splitter.addWidget(self.right_panel)
@@ -291,7 +291,7 @@ class CloudTab(QWidget):
         form = self.left_panel.findChild(QFormLayout)
         if form:
             for i in range(form.rowCount()):
-                item = form.itemAt(i, QFormLayout.LabelRole)
+                item = form.itemAt(i, QFormLayout.ItemRole.LabelRole)
                 if not item: continue
                 label = item.widget()
                 if not label: continue
@@ -354,7 +354,7 @@ class CloudTab(QWidget):
                 prev_active_count += 1
             
             cb_layout.addWidget(cb)
-            cb_layout.setAlignment(Qt.AlignCenter)
+            cb_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
             cb_layout.setContentsMargins(0, 0, 0, 0)
             self.table.setCellWidget(i, 0, cb_widget)
             
@@ -390,10 +390,10 @@ class CloudTab(QWidget):
             
         res = QMessageBox.question(self, "Resume Streaming", 
                                 f"Cloud streaming was active last session ({count} channels). Resume now?",
-                                QMessageBox.Yes | QMessageBox.No)
+                                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         
         # Checkbox for "Always resume"
-        if res == QMessageBox.Yes:
+        if res == QMessageBox.StandardButton.Yes:
             # We don't have a standard way to add a checkbox to QMessageBox.question easily without custom class
             # but we can ask separately or just implement it. 
             self.start_all()
@@ -544,7 +544,7 @@ class CloudTab(QWidget):
         cb = self.table.cellWidget(row, 0).findChild(QCheckBox)
         ch_data = cb.property("ch_data")
         uri = ch_data.get('rtsp_url', '')
-        from PySide6.QtWidgets import QApplication
+        from PyQt6.QtWidgets import QApplication
         QApplication.clipboard().setText(uri)
         QMessageBox.information(self, "Copied", f"Copied RTSP Source:\n{uri}")
 
@@ -564,8 +564,8 @@ class CloudTab(QWidget):
         host = self.edit_host.text() or "localhost"
         port = self.table.item(row, 4).text()
         uri = f"srt://{host}:{port}"
-        from PySide6.QtGui import QClipboard
-        from PySide6.QtWidgets import QApplication
+        from PyQt6.QtGui import QClipboard
+        from PyQt6.QtWidgets import QApplication
         QApplication.clipboard().setText(uri)
         QMessageBox.information(self, "Copied", f"Copied to clipboard:\n{uri}")
 

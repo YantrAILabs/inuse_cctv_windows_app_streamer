@@ -3,7 +3,7 @@ import time
 import psutil
 import httpx
 from datetime import datetime
-from PySide6.QtCore import QThread, Signal
+from PyQt6.QtCore import QThread, pyqtSignal as Signal
 
 class HeartbeatWorker(QThread):
     """

@@ -1,6 +1,6 @@
 import logging
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QPushButton, QLabel, QHeaderView, QMenu
-from PySide6.QtCore import Qt, Signal
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QPushButton, QLabel, QHeaderView, QMenu
+from PyQt6.QtCore import Qt, pyqtSignal as Signal
 from core.onvif_scanner import ONVIFScanner
 from ui.auth_dialog import AuthDialog
 
@@ -25,10 +25,10 @@ class DiscoveryTab(QWidget):
         # Device Table
         self.table = QTableWidget(0, 5)
         self.table.setHorizontalHeaderLabels(["Status", "IP Address", "Manufacturer", "Model", "Type"])
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.setSelectionBehavior(QTableWidget.SelectRows)
-        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
-        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.table.customContextMenuRequested.connect(self.show_context_menu)
         self.table.doubleClicked.connect(self.on_row_double_clicked)
         layout.addWidget(self.table)
@@ -88,7 +88,7 @@ class DiscoveryTab(QWidget):
         
         action = menu.exec(self.table.viewport().mapToGlobal(pos))
         if action == copy_ip_act:
-            from PySide6.QtGui import QGuiApplication
+            from PyQt6.QtGui import QGuiApplication
             QGuiApplication.clipboard().setText(device_info['ip'])
         elif action == forget_act:
             from core.credential_store import CredentialStore

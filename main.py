@@ -1,9 +1,19 @@
 import sys
+import msvc_runtime
 import logging
 import os
 import signal
 import subprocess
-from PySide6.QtWidgets import QApplication
+
+# --- HOTFIX FOR WINDOWS QT PLUGIN CRASH ---
+base_dir = os.path.dirname(os.path.abspath(__file__))
+venv_dir = os.path.join(base_dir, ".venv")
+qt_plugin_path = os.path.join(venv_dir, "Lib", "site-packages", "PyQt6", "plugins")
+# os.environ["QT_PLUGIN_PATH"] = qt_plugin_path
+# os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.join(qt_plugin_path, "platforms")
+# ------------------------------------------
+
+from PyQt6.QtWidgets import QApplication
 from ui.main_window import MainWindow
 from core.config_manager import ConfigManager
 

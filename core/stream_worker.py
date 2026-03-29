@@ -2,8 +2,8 @@ import time
 import logging
 import cv2
 import numpy as np
-from PySide6.QtCore import QThread, Signal, Qt
-from PySide6.QtGui import QImage, QPixmap
+from PyQt6.QtCore import QThread, pyqtSignal as Signal, Qt
+from PyQt6.QtGui import QImage, QPixmap
 
 class StreamWorker(QThread):
     """
@@ -70,7 +70,7 @@ class StreamWorker(QThread):
                 h, w, ch = rgb_frame.shape
                 bytes_per_line = ch * w
                 
-                qt_image = QImage(rgb_frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
+                qt_image = QImage(rgb_frame.data, w, h, bytes_per_line, QImage.Format.Format_RGB888)
                 self.frame_ready.emit(qt_image.copy()) # Copy to ensure data ownership
                 
                 # Control frame rate? OpenCV usually handles this based on RTSP stream
@@ -81,14 +81,16 @@ class StreamWorker(QThread):
         self.status_changed.emit("failed")
 
     def _open_capture(self):
-        # Build URL with TCP transport if needed 
-        # (Though OpenCV 4.x usually tries TCP then UDP by default)
-        cap = cv2.VideoCapture(self.rtsp_url)
+        import os
+        # Force TCP transport for RTSP (more reliable for Hikvision DVRs)
+        os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;tcp|analyzeduration;5000000|probesize;5000000"
+        cap = cv2.VideoCapture(self.rtsp_url, cv2.CAP_FFMPEG)
         cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         
-        # Check if opened
         if cap.isOpened():
+            logging.info(f"Stream opened: {self.channel_id}")
             return cap
+        logging.warning(f"Failed to open stream: {self.rtsp_url}")
         return None
 
     def _handle_failure(self):

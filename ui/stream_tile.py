@@ -1,9 +1,9 @@
 import os
 import logging
 from datetime import datetime
-from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QFrame, QHBoxLayout, QToolButton, QMessageBox
-from PySide6.QtCore import Qt, Signal, QTimer, QSize
-from PySide6.QtGui import QPixmap, QImage, QPainter, QColor, QAction, QIcon
+from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QFrame, QHBoxLayout, QToolButton, QMessageBox
+from PyQt6.QtCore import Qt, pyqtSignal as Signal, QTimer, QSize
+from PyQt6.QtGui import QPixmap, QImage, QPainter, QColor, QAction, QIcon
 
 class StreamTile(QFrame):
     """
@@ -14,8 +14,8 @@ class StreamTile(QFrame):
     def __init__(self, channel_info, parent=None):
         super().__init__(parent)
         self.setObjectName("StreamTile")
-        self.setFrameShape(QFrame.StyledPanel)
-        self.setFocusPolicy(Qt.StrongFocus)
+        self.setFrameShape(QFrame.Shape.StyledPanel)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         
         self.channel_info = channel_info
         self.ip = channel_info.get("ip", "Unknown")
@@ -27,7 +27,7 @@ class StreamTile(QFrame):
         
         # Video Label
         self.video_label = QLabel("No Signal")
-        self.video_label.setAlignment(Qt.AlignCenter)
+        self.video_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.video_label.setStyleSheet("background-color: black; color: #555; font-size: 24px;")
         self.layout.addWidget(self.video_label)
         
@@ -75,7 +75,7 @@ class StreamTile(QFrame):
         # Top-left: Camera Name/IP
         self.label_overlay = QLabel(f"Ch {self.ch_num} - {self.ip}", self)
         self.label_overlay.setObjectName("overlay-label")
-        self.label_overlay.setAttribute(Qt.WA_TransparentForMouseEvents)
+        self.label_overlay.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         
         # Top-right: Status LED
         self.status_led = QLabel(self)
@@ -85,7 +85,7 @@ class StreamTile(QFrame):
         # Bottom-right: Timestamp
         self.time_overlay = QLabel(self)
         self.time_overlay.setObjectName("overlay-label")
-        self.time_overlay.setAttribute(Qt.WA_TransparentForMouseEvents)
+        self.time_overlay.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -103,13 +103,13 @@ class StreamTile(QFrame):
         super().leaveEvent(event)
 
     def mouseDoubleClickEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             self.double_clicked.emit(self)
 
     def update_frame(self, qt_image):
         pixmap = QPixmap.fromImage(qt_image)
         # Scaled to label size preserving aspect ratio
-        self.video_label.setPixmap(pixmap.scaled(self.video_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.video_label.setPixmap(pixmap.scaled(self.video_label.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
 
     def update_status(self, status):
         color = "gray"
@@ -154,6 +154,6 @@ class StreamTile(QFrame):
         msg = QMessageBox(self)
         msg.setWindowTitle(f"Camera Details - {self.ip}")
         msg.setText(info_text)
-        msg.setIcon(QMessageBox.Information)
-        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setIcon(QMessageBox.Icon.Information)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
         msg.exec()
